@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Coin Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: "Poppins", sans-serif;
+        color: #fff;
+        background: #0d1117;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 40px auto 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-gap: 20px;
+    }
+
+    .card {
+        background: #161b22;
+        padding: 20px;
+        border-radius: 15px;
+        transition: 0.3s ease-in-out;
+        box-shadow: 0 0 10px #00000044;
+        border: 1px solid #30363d;
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 0 20px #00000088;
+    }
+
+    .symbol {
+        font-size: 14px;
+        opacity: 0.7;
+    }
+
+    .name {
+        font-size: 20px;
+        font-weight: 600;
+        margin-top: 5px;
+    }
+
+    .price {
+        font-size: 26px;
+        font-weight: 700;
+        margin-top: 10px;
+    }
+
+    .green {
+        color: #00ff88;
+    }
+
+    .red {
+        color: #ff4d4d;
+    }
+
+    .refresh-btn {
+        padding: 10px 25px;
+        background: #238636;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: 0.3s;
+    }
+
+    .refresh-btn:hover {
+        background: #2ea043;
+    }
+
+    footer.signature {
+        text-align: center;
+        margin-top: 50px;
+        padding: 20px;
+        color: #bbbbbb;
+        font-size: 15px;
+        font-weight: 500;
+        animation: fadeIn 1.2s ease-in-out;
+    }
+
+    footer.signature span {
+        color: #00eaff;
+        font-weight: 600;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+</style>
+
+<h1>Crypto Tracker Dashboard</h1>
+
+<div style="text-align:center">
+    <button class="refresh-btn" onclick="loadCoins()">Refresh</button>
+</div>
+
+<div class="container" id="coinContainer">
+    <!-- Crypto Cards will load here dynamically -->
+</div>
+
+<footer class="signature">
+    ✨ Designed & Developed by <span>Anuj Patil</span>
+</footer>
+
+<script>
+    async function loadCoins() {
+        const container = document.getElementById("coinContainer");
+        container.innerHTML = "<h3 style='text-align:center;width:100%'>Loading...</h3>";
+
+        try {
+            const res = await fetch("/api/coins/");
+            const data = await res.json();
+
+            container.innerHTML = "";
+
+            data.forEach(coin => {
+                const priceClass = coin.price_category === "up" ? "green" : "red";
+
+                // Use formatted_price directly from DB
+                container.innerHTML += `
+                    <div class="card">
+                        <div class="symbol">${coin.symbol.toUpperCase()}</div>
+                        <div class="name">${coin.name}</div>
+                        <div class="price ${priceClass}">${coin.formatted_price}</div>
+                    </div>
+                `;
+            });
+
+        } catch (e) {
+            container.innerHTML = "<p style='text-align:center'>Error loading data.</p>";
+            console.error(e);
+        }
+    }
+
+    loadCoins();
+</script>
+{% endblock %}
