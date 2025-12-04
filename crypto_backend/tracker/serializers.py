@@ -3,6 +3,7 @@ from .models import Coin
 
 class CoinSerializer(serializers.ModelSerializer):
     price_category = serializers.SerializerMethodField()
+    coin_id = serializers.CharField(source='id')
     formatted_price = serializers.SerializerMethodField()
     market_health = serializers.SerializerMethodField()
     rating = serializers.SerializerMethodField()
@@ -10,6 +11,7 @@ class CoinSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coin
         fields = [
+            'id',
             'coin_id',
             'symbol',
             'name',
@@ -21,9 +23,16 @@ class CoinSerializer(serializers.ModelSerializer):
             'rating'
         ]
 
+    # ---------- PRICE IN INR ----------
     def get_formatted_price(self, obj):
-        return f"${obj.current_price:,.2f}" if obj.current_price else "N/A"
+        try:
+            usd = obj.current_price
+            inr = usd * 89.89  # Convert USD → INR (approx, stable)
+            return f"₹{inr:,.2f}"
+        except:
+            return "N/A"
 
+    # ---------- PRICE CATEGORY ----------
     def get_price_category(self, obj):
         if obj.market_cap > 200_000_000_000:
             return "🚀 High Market Cap"
@@ -31,6 +40,7 @@ class CoinSerializer(serializers.ModelSerializer):
             return "📈 Mid Market Cap"
         return "🌱 Emerging Coin"
 
+    # ---------- MARKET HEALTH ----------
     def get_market_health(self, obj):
         if obj.market_cap > 500_000_000_000:
             return "🔥 Strong Market Leader"
@@ -38,6 +48,7 @@ class CoinSerializer(serializers.ModelSerializer):
             return "👍 Stable Performer"
         return "🟡 High Volatility Risk"
 
+    # ---------- RATING ----------
     def get_rating(self, obj):
         if obj.market_cap > 200_000_000_000:
             return "A+"
