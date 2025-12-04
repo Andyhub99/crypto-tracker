@@ -174,11 +174,7 @@ python manage.py fetch_prices
 GitHub: **https://github.com/Andyhub99**
 
 ---
-## Project Screenshot
 
-Here’s how the Crypto Tracker dashboard looks:
-
-![Crypto Tracker Screenshot](Screenshot/crypto%20tracker.jpg)
 
 
 
