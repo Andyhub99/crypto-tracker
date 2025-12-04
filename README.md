@@ -181,6 +181,7 @@ Here’s how the Crypto Tracker dashboard looks:
 ![Crypto Tracker Screenshot](Screenshot/crypto%20tracker.jpg)
 
 
+
 # 🌟 End
 
 A simple, elegant, and powerful **Crypto Tracking Dashboard** made with love,  
