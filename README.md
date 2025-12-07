@@ -29,7 +29,7 @@ After fetching API data:
 | `symbol` | BTC, ETH, LTC, DOGE |
 | `name` | Full crypto name |
 | `current_price` | LIVE USD price |
-| `formatted_price` | $XX,XXX.XX formatted price |
+| `formatted_price` | ₹XX,XXX.XX formatted price |
 | `market_cap` | Current market cap |
 | `last_updated` | Timestamp |
 
@@ -54,7 +54,7 @@ For every crypto, the card displays:
 
 - Symbol → BTC  
 - Name → Bitcoin  
-- Price → **$92,700.21**  
+- Price → **₹80,11,021.96**  
 - Color based on price movement  
 - Soft animations & glowing hover effect  
 
