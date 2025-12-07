@@ -28,7 +28,7 @@ After fetching API data:
 | `coin_id` | Unique crypto ID (e.g., bitcoin) |
 | `symbol` | BTC, ETH, LTC, DOGE |
 | `name` | Full crypto name |
-| `current_price` | LIVE USD price |
+| `current_price` | LIVE INR price |
 | `formatted_price` | ₹XX,XXX.XX formatted price |
 | `market_cap` | Current market cap |
 | `last_updated` | Timestamp |
